@@ -8,13 +8,13 @@ defmodule Keenex.HTTP do
 
   def get(endpoint) do
     headers = ["Authorization": Keenex.get_key(:read)]
-    HTTPoison.get(@url <> endpoint, Keyword.merge(@headers, headers))
+    HTTPoison.get(@url <> endpoint, Keyword.merge(@headers, headers), [recv_timeout: 300000])
     |> handle_response
   end
 
   def post(endpoint, data, key_type \\ :write) do
     headers = ["Authorization": Keenex.get_key(key_type)]
-    HTTPoison.post(@url <> endpoint, Poison.encode!(data), Keyword.merge(@headers, headers))
+    HTTPoison.post(@url <> endpoint, Poison.encode!(data), Keyword.merge(@headers, headers), [recv_timeout: 300000])
     |> handle_response
   end
 
